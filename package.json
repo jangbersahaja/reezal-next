@@ -1,20 +1,23 @@
 {
-
   "private": true,
   "scripts": {
     "test": "jest",
     "dev": " next dev -p 8000",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start"
   },
   "dependencies": {
     "@apollo/client": "^3.4.16",
+    "extracted-loader": "^1.0.7",
+    "file-loader": "^6.2.0",
     "graphql": "^16.0.0",
+    "moment": "^2.29.1",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-is": "^17.0.2",
+    "react-moment": "^1.1.1",
     "react-pdf": "^5.5.0",
     "react-player": "^2.9.0",
     "styled-components": "^5.2.3"

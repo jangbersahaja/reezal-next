@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import Image from "next/image";
+import ReactPlayer from "react-player/facebook";
 
 const Container = styled.div`
   background: linear-gradient(180deg, #f2f6f9 0%, #fff 100%);
@@ -99,7 +100,6 @@ const Two = styled.div`
 `;
 
 const SectionTitle = styled.h1`
-  font-family: "Playfair Display", serif;
   font-size: 60px;
   font-weight: bold;
   line-height: 1;
@@ -107,6 +107,8 @@ const SectionTitle = styled.h1`
   margin-bottom: 20px;
   color: #37517e;
   text-align: center;
+
+  margin-top: 50px;
 
   border-bottom: 7px solid #d43076;
 
@@ -132,7 +134,6 @@ const Text = styled.div`
     background: none;
   }
 `;
-
 
 const ItemTitle = styled.h2`
   font-size: 24px;
@@ -216,7 +217,7 @@ const Paper = styled.div`
 
   margin-bottom: 30px;
   width: 98%;
-  padding: 1%;
+  padding: 20px 1%;
 
   border-radius: 10px;
   background-color: #fff;
@@ -228,9 +229,7 @@ const Paper = styled.div`
   }
 `;
 
-const TextWrapper = styled.div`
-  width: 48%;
-`;
+const TextWrapper = styled.div``;
 
 const Title = styled.h2`
   margin: 5px 0;
@@ -242,13 +241,105 @@ const Desc = styled.p`
   font-size: 14px;
   line-height: 1.5;
 
+  column-count: 2;
+
   text-align: justify;
   white-space: pre-line;
+
+  @media (max-width: 768px) {
+    column-count: 1;
+  }
+`;
+
+const Video = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 70%;
+
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+`;
+
+const VideoWrapper = styled.div`
+  overflow: hidden;
+  border-radius: 10px;
+  width: 100%;
+  position: relative;
+  padding-top: 56.25%;
+
+  border: 0.8px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12);
+
+  z-index: 3;
+`;
+
+const VideoPlayer = styled(ReactPlayer)`
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const KepalaBatas = () => {
   return (
     <Container>
+      <Wrapper>
+        <Video>
+          <VideoWrapper>
+            <VideoPlayer
+              url="https://www.facebook.com/reezal.merican041/videos/1055491388576290"
+              width="100%"
+              height="100%"
+              controls
+              playing
+              muted
+            />
+          </VideoWrapper>
+        </Video>
+        <SectionTitle>Kepala Batas Di Hatiku</SectionTitle>
+        <Paper>
+          <TextWrapper>
+            <Title>Kepala Batas</Title>
+            <Desc>
+              Kepala Batas merupakan sebuah bandar dan Kompleks Pejabat Kerajaan
+              bagi daerah Seberang Perai Utara, Pulau Pinang, Malaysia. Ia
+              terletak di tengah perjalanan Butterworth ke Sungai Petani,
+              terletak 30 km dari George Town. Kepala batas juga membawa maksud
+              bahagian depan batas sawah padi. Batas ialah pemisah antara tanah
+              pesawah-pesawah padi. Wakil Rakyat di Kepala Batas ialah bekas
+              Perdana Menteri Malaysia, Abdullah Ahmad Badawi, sebagai tempat
+              desanya. Kepala Batas juga sangat berdekatan dengan Tasek Gelugor,
+              Penaga dan Bukit Mertajam. Stesen Keretapi Tasik Gelugor sekarang
+              juga merupakan satu lagi stesen alternatif untuk melancong ke
+              Selatan bagi penduduk sini. Bandar ini dengan Pulau Pinang juga
+              merupakan bandar seperti Kuala Lumpur dan Gombak di Pulau Pinang.
+              <br />
+              <br />
+              'Kepala Batas' bermaksud bahagian depan sawah padi. Batas ialah
+              pemisah antara tanah pesawah-pesawah padi . Biasanya batas ini
+              dibuat daripada tanah sebagai benteng penahan air agar paras air
+              dalam sawah tidak terlalu banyak. Jika paras air di dalam sawah
+              lebih daripada sejengkal, padi agak susah ditanam . Anak padi akan
+              tenggelam, terutama jika selepas hujan lebat. Batas air di dalam
+              sawah perlu dikawal sepanjang masa. Sebagai kawasan persisiran
+              pantai, kawasan ini pada masa dahulu mempunyai saliran yang buruk
+              dan sering dilanda banjir. Dengan itu tidak sesuai untuk tanaman
+              kecuali padi yang tumbuh di dalam air. Oleh itu pembinaan saliran
+              adalah satu langkah untuk pemulihan atau tebusguna tanah. Banyak
+              kawasan di Kedah dan Pulau Pinang melalui proses ini. Sungai Korok
+              di Kedah maupun di Pulau Pinang adalah pelat buruh dari Jawa yang
+              menyebut "korok" walhal di Kedah lebih tepat dipanggil Sungai
+              Korek. Di tebing Sungai Korek ini biasanya ada timbunan tanah dari
+              parit sebagai benteng untuk mengelak kemasukan air masin. Timbunan
+              tanah sepanjang parit korek ini dipanggil batas atau bund dalam
+              bahasa Inggeris. Hujung bund ini di mana parit berakhir atau
+              bertembung dengan parit lain dipanggil kepala batas. Oleh itu kita
+              boleh dapati beberapa tempat di Kedah dan Perlis mempunyai nama
+              yang sama iaitu Kepala Batas.
+            </Desc>
+          </TextWrapper>
+        </Paper>
+      </Wrapper>
       <Collage>
         <Column>
           <Seven>
@@ -315,53 +406,6 @@ const KepalaBatas = () => {
           </Three>
         </Column>
       </Collage>
-      <Wrapper>
-        <SectionTitle>Kepala Batas Di Hatiku</SectionTitle>
-        <Paper>
-          <TextWrapper>
-              <Title>Kepala Batas</Title>
-            <Desc>
-              Kepala Batas merupakan sebuah bandar dan Kompleks Pejabat Kerajaan
-              bagi daerah Seberang Perai Utara, Pulau Pinang, Malaysia. Ia
-              terletak di tengah perjalanan Butterworth ke Sungai Petani,
-              terletak 30 km dari George Town. Kepala batas juga membawa maksud
-              bahagian depan batas sawah padi. Batas ialah pemisah antara tanah
-              pesawah-pesawah padi. Wakil Rakyat di Kepala Batas ialah bekas
-              Perdana Menteri Malaysia, Abdullah Ahmad Badawi, sebagai tempat
-              desanya. Kepala Batas juga sangat berdekatan dengan Tasek Gelugor,
-              Penaga dan Bukit Mertajam. Stesen Keretapi Tasik Gelugor sekarang
-              juga merupakan satu lagi stesen alternatif untuk melancong ke
-              Selatan bagi penduduk sini. Bandar ini dengan Pulau Pinang juga
-              merupakan bandar seperti Kuala Lumpur dan Gombak di Pulau Pinang.
-            </Desc>
-          </TextWrapper>
-          <TextWrapper>
-            <Desc>
-              'Kepala Batas' bermaksud bahagian depan sawah padi. Batas ialah
-              pemisah antara tanah pesawah-pesawah padi . Biasanya batas ini
-              dibuat daripada tanah sebagai benteng penahan air agar paras air
-              dalam sawah tidak terlalu banyak. Jika paras air di dalam sawah
-              lebih daripada sejengkal, padi agak susah ditanam . Anak padi akan
-              tenggelam, terutama jika selepas hujan lebat. Batas air di dalam
-              sawah perlu dikawal sepanjang masa. Sebagai kawasan persisiran
-              pantai, kawasan ini pada masa dahulu mempunyai saliran yang buruk
-              dan sering dilanda banjir. Dengan itu tidak sesuai untuk tanaman
-              kecuali padi yang tumbuh di dalam air. Oleh itu pembinaan saliran
-              adalah satu langkah untuk pemulihan atau tebusguna tanah. Banyak
-              kawasan di Kedah dan Pulau Pinang melalui proses ini. Sungai Korok
-              di Kedah maupun di Pulau Pinang adalah pelat buruh dari Jawa yang
-              menyebut "korok" walhal di Kedah lebih tepat dipanggil Sungai
-              Korek. Di tebing Sungai Korek ini biasanya ada timbunan tanah dari
-              parit sebagai benteng untuk mengelak kemasukan air masin. Timbunan
-              tanah sepanjang parit korek ini dipanggil batas atau bund dalam
-              bahasa Inggeris. Hujung bund ini di mana parit berakhir atau
-              bertembung dengan parit lain dipanggil kepala batas. Oleh itu kita
-              boleh dapati beberapa tempat di Kedah dan Perlis mempunyai nama
-              yang sama iaitu Kepala Batas.
-            </Desc>
-          </TextWrapper>
-        </Paper>
-      </Wrapper>
     </Container>
   );
 };

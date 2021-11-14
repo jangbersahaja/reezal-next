@@ -7,6 +7,7 @@ import Articles from "../../src/article/article";
 
 import Link from "next/link";
 import Image from "next/image";
+import Moment from "react-moment";
 
 const Container = styled.div`
   background: linear-gradient(180deg, #f2f6f9 0%, #fff 100%);
@@ -126,26 +127,32 @@ const Desc = styled.div`
 const Date = styled.span`
   font-size: 12px;
   margin: auto 0;
+  font-weight: bold;
 `;
 
 const Title = styled.h2`
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1;
 `;
 
-const PostText = styled.p`
-  text-align: justify;
-  white-space: pre-line;
-  font-size: 14px;
-  line-height: 1.5;
+const PostText = styled.div`
+  p {
+    font-size: 14px;
+    line-height: 1.5;
+
+    text-align: justify;
+    white-space: pre-line;
+    margin-bottom: 15px;
+  }
 
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 15;
+  -webkit-line-clamp: 13;
   -webkit-box-orient: vertical;
 
   @media (max-width: 768px) {
+    height: 250px;
     -webkit-line-clamp: 12;
   }
 `;
@@ -216,8 +223,8 @@ const ArrowRight = styled(FaArrowRight)`
   color: #fff;
 `;
 
-const FeaturedArticle = () => {
-  const [featured, setFeatured] = useState(3);
+const FeaturedArticle = ({ articles }) => {
+  const [featured, setFeatured] = useState(0);
 
   const nextArticle = () => {
     if (featured === 4) {
@@ -235,35 +242,32 @@ const FeaturedArticle = () => {
     }
   };
 
-  const post = Articles.filter((e) => e.id === featured.toString()).map(
-    (p, i) => {
-      return (
-        <Post key={i}>
-          <ImgWrapper>
-            <Image src={p.img} layout="fill" objectFit="cover" />
-          </ImgWrapper>
-          <TextWrapper>
-            <Desc>
-              <Date>{p.date.toDateString()}</Date>
-              <LineBreak />
-              <Title>{p.title}</Title>
-              <LineBreak />
-              {p.desc.map((t, i) => (
-                <PostText
-                  key={i}
-                  className="text"
-                  dangerouslySetInnerHTML={t}
-                />
-              ))}
-              <LineBreak />
-              <Link href={`/blog/${p.id}`} passHref>
-                <ReadMore>Click to read</ReadMore>
-              </Link>
-            </Desc>
-          </TextWrapper>
-        </Post>
-      );
-    }
+  const article = articles[featured];
+
+  const post = (
+    <Post key={article.id}>
+      <ImgWrapper>
+        <Image src={article.coverImage.url} layout="fill" objectFit="cover" />
+      </ImgWrapper>
+      <TextWrapper>
+        <Desc>
+          <Date>
+            <Moment format="dddd, DD MMM YYYY">{article.date}</Moment>
+          </Date>
+          <LineBreak />
+          <Title>{article.title}</Title>
+          <LineBreak />
+          <PostText
+            className="text"
+            dangerouslySetInnerHTML={{ __html: article.content.html }}
+          />
+          <LineBreak />
+          <Link href={`/blog/${article.slug}`} passHref>
+            <ReadMore>Click to read</ReadMore>
+          </Link>
+        </Desc>
+      </TextWrapper>
+    </Post>
   );
 
   return (

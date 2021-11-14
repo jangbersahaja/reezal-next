@@ -18,6 +18,8 @@ module.exports = {
       "www.kpkt.gov.my",
       "dzu2r3t0ymp2a.cloudfront.net",
       "img.astroawani.com",
+      "assets.nst.com.my",
+      "www.kosmo.com.my",
     ],
   },
 };

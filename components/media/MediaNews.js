@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import Image from "next/image";
 
-import News from "../../src/media/news/news";
 import MediaHouse from "../../src/media/news/mediahouse";
 
 import { AiOutlineSearch, AiOutlineCalendar } from "react-icons/ai";
+import Moment from "react-moment";
 
 const Section = styled.div`
   display: flex;
@@ -91,7 +91,7 @@ const TextWrapper = styled.div`
 
 const PostTitle = styled.h3`
   margin-bottom: 5px;
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 const PostDesc = styled.p`
@@ -288,52 +288,96 @@ const LineBreak = styled.hr`
   border-top: 0.8px solid rgba(0, 0, 0, 0.1);
 `;
 
-const MediaNews = ({news}) => {
-  console.log(news)
-
+const MediaNews = ({ news }) => {
   const [visible, setVisible] = useState(8);
 
-  const sortedNews = news.slice(0, visible)
-    .map((n) => {
-      return (
-        <PostNews key={n.id}>
-          <CardContent>
-            <ImgWrapper>
-              <Image
-                src={n.thumbnailUrl}
-                alt={n.title}
-                layout="fill"
-                objectFit="cover"
-              />
-                  <PostSourceImg
-                  alt={n.mediaHouse.name}
-                    src={n.mediaHouse.logoUrl}
-                    width={n.mediaHouse.width}
-                    padding={n.mediaHouse.padding}
-                    bg={n.mediaHouse.bgColor.css}
-                  />
-            </ImgWrapper>
-            <TextWrapper>
-              <PostDetails>
-                <PostDate>{n.date}</PostDate>
-              </PostDetails>
-              <PostTitle>{n.title}</PostTitle>
-              <LineBreak />
-              <PostDesc>{n.lead}</PostDesc>
-            </TextWrapper>
-          </CardContent>
-          <CardEnd>
+  const media = [...new Set(news.map((item) => item.mediaHouse.name))];
+  const language = [...new Set(news.map((item) => item.mediaHouse.language))];
+
+  const FilterForm = (
+    <FilterCard>
+      <CardTitle>Filter</CardTitle>
+      <LineBreak />
+      <Search>
+        <Icon>
+          <AiOutlineSearch />
+        </Icon>
+        <Input placeholder="Search News" />
+      </Search>
+      <Search>
+        <Icon>
+          <AiOutlineCalendar />
+        </Icon>
+        <Input placeholder="Date Range" />
+      </Search>
+      <LineBreak />
+      {media.map((name, i) => (
+        <Filter key={i}>
+          <Select type="checkbox" id={i} name="media-name" value={name} />
+          <Label>{name}</Label>
+        </Filter>
+      ))}
+      <LineBreak />
+      {language.map((language, i) => (
+        <Filter key={i}>
+          <Select type="checkbox" id={i} name="language" value={language} />
+          <Label>{language === "Malay" ? "Bahasa Malaysia" : language}</Label>
+        </Filter>
+      ))}
+      <LineBreak />
+      <Reset>Reset Filter</Reset>
+    </FilterCard>
+  );
+
+  const sortedNews = news.slice(0, visible).map((n) => {
+    return (
+      <PostNews key={n.id}>
+        <CardContent>
+          <ImgWrapper>
+            <Image
+              src={n.thumbnailUrl}
+              alt={n.title}
+              layout="fill"
+              objectFit="cover"
+            />
+            <PostSourceImg
+              alt={n.mediaHouse.name}
+              src={n.mediaHouse.logoUrl}
+              width={n.mediaHouse.width}
+              padding={n.mediaHouse.padding}
+              bg={n.mediaHouse.bgColor.css}
+            />
+          </ImgWrapper>
+          <TextWrapper>
+            <PostDetails>
+              <PostDate>
+                <Moment format="dddd, DD MMM YYYY">{n.date}</Moment>
+              </PostDate>
+            </PostDetails>
+            <PostTitle>{n.title}</PostTitle>
             <LineBreak />
-            <ReadMore href={n.url} target="_blank" rel="noopener noreferrer">
-              Click to read
-            </ReadMore>
-          </CardEnd>
-        </PostNews>
-      );
-    });
+            <PostDesc>{n.lead}</PostDesc>
+          </TextWrapper>
+        </CardContent>
+        <CardEnd>
+          <LineBreak />
+          <ReadMore href={n.url} target="_blank" rel="noopener noreferrer">
+            Click to read
+          </ReadMore>
+        </CardEnd>
+      </PostNews>
+    );
+  });
+
+  useEffect(() => {
+    const newsCount = window.sessionStorage.getItem("news");
+    newsCount ? setVisible(parseInt(newsCount)) : setVisible(5);
+  }, []);
 
   const showMoreItems = () => {
     setVisible((prevValue) => prevValue + 3);
+    const count = visible + 3;
+    window.sessionStorage.setItem("news", count);
   };
 
   return (
@@ -349,51 +393,7 @@ const MediaNews = ({news}) => {
           </ShowMoreButton>
         </ShowMoreNews>
       </Items>
-      <FilterCard>
-        <CardTitle>Filter</CardTitle>
-        <LineBreak />
-        <Search>
-          <Icon>
-            <AiOutlineSearch />
-          </Icon>
-          <Input placeholder="Search News" />
-        </Search>
-        <Search>
-          <Icon>
-            <AiOutlineCalendar />
-          </Icon>
-          <Input placeholder="Date Range" />
-        </Search>
-
-        <LineBreak />
-        {MediaHouse.map((m) => (
-          <Filter key={m.id}>
-            <Select
-              type="checkbox"
-              id={m.id}
-              name="media-name"
-              value={m.name}
-            />
-              <Label>{m.name}</Label>
-          </Filter>
-        ))}
-        <LineBreak />
-        <Filter>
-          <Select
-            type="checkbox"
-            id="BM"
-            name="language"
-            value="Bahasa Melaysia"
-          />
-          <Label>Bahasa Malaysia</Label>
-        </Filter>
-        <Filter>
-          <Select type="checkbox" id="EN" name="language" value="English" />
-          <Label>English</Label>
-        </Filter>
-        <LineBreak />
-        <Reset>Reset Filter</Reset>
-      </FilterCard>
+      {FilterForm}
     </Section>
   );
 };

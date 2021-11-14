@@ -154,7 +154,6 @@ const AnotherSectionTitle = styled.h1`
 `;
 
 const News = ({ news }) => {
-  console.log(news);
   return (
     <>
       <Container>
@@ -203,6 +202,7 @@ export const getStaticProps = async () => {
           url
           thumbnailUrl
           mediaHouse {
+            language
             name
             logoUrl
             width
@@ -221,7 +221,6 @@ export const getStaticProps = async () => {
       news,
     },
   };
-  revalidate: 30;
 };
 
 export default News;

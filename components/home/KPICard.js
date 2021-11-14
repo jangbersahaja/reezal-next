@@ -7,8 +7,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  margin: 30px 0;
-
   @media (max-width: 992px) {
     flex-direction: column;
   }
@@ -80,6 +78,7 @@ const ReadMore = styled.a`
   transition: all 0.3s ease-in;
   font-weight: 900;
   margin-bottom: 20px;
+  cursor: pointer;
   &:hover {
     color: #d43076;
   }
@@ -98,7 +97,7 @@ const KPICard = () => {
             />
           </ImgWrapper>
           <TextWrapper>
-            <Title>2. Rumah IKRAM Keluarga Malaysia</Title>
+            <Title>Rumah IKRAM Keluarga Malaysia</Title>
             <LineBreak />
             <Desc>
               Inisiatif ini dirangka secara bersasar dengan tumpuan kepada
@@ -106,7 +105,7 @@ const KPICard = () => {
               mendapat manfaat dari program ini.
             </Desc>
             <LineBreak />
-            <Link href="">
+            <Link href="/focus/rumahikram" passHref>
               <ReadMore>Click to read</ReadMore>
             </Link>
           </TextWrapper>
@@ -114,7 +113,7 @@ const KPICard = () => {
 
         <Card>
           <TextWrapper>
-            <Title>3. JENDELA@PPR</Title>
+            <Title>JENDELA@PPR</Title>
             <LineBreak />
             <Desc>
               Pemasangan wireless hotspots di common areas seperti surau dan
@@ -137,7 +136,7 @@ const KPICard = () => {
 
         <Card>
           <TextWrapper>
-            <Title>4. Program Transformasi Pasar Malam KPKT</Title>
+            <Title>Program Transformasi Pasar Malam KPKT</Title>
             <LineBreak />
             <Desc>
               Inisiatif dirangka bagi tujuan memperkenalkan projek rintis /

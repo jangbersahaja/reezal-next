@@ -43,7 +43,6 @@ const SectionTitleTop = styled.h3`
   text-align: center;
   color: #d43076;
   text-transform: uppercase;
-  
 `;
 
 const SectionTitle = styled.h1`
@@ -97,7 +96,7 @@ const Details = styled.div`
   width: 60%;
 `;
 
-const VideoTitle = styled.h1`
+const VideoTitle = styled.h2`
   font-size: 16px;
 `;
 
@@ -126,7 +125,6 @@ const VideoWrapper = styled.div`
   width: 100%;
   position: relative;
   padding-top: 56.25%;
-
 
   z-index: 3;
 `;

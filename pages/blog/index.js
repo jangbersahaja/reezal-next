@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import Link from "next/link";
@@ -5,9 +6,9 @@ import Image from "next/image";
 
 import Articles from "../../src/article/article";
 
-
 import gql from "graphql-tag";
 import client from "../../apolloClient";
+import Moment from "react-moment";
 
 const Container = styled.div`
   background-color: #fff;
@@ -77,7 +78,6 @@ const TitleWrapper = styled.div`
 `;
 
 const SectionTitle = styled.h1`
-  font-family: "Playfair Display", serif;
   font-size: 60px;
   font-weight: bold;
   line-height: 1;
@@ -109,6 +109,10 @@ const Post = styled.div`
   border: 0.8px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12);
 
+  &:hover {
+    background-color: #efefef;
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     min-height: 300px;
@@ -117,7 +121,7 @@ const Post = styled.div`
 
 const ImgWrapper = styled.div`
   width: 40%;
-  height: 240px;
+  height: 260px;
   position: relative;
 
   display: flex;
@@ -128,6 +132,10 @@ const ImgWrapper = styled.div`
 `;
 
 const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  justify-content: end;
   width: 60%;
   padding: 2%;
   overflow: hidden;
@@ -160,10 +168,9 @@ const Date = styled.span`
   margin: auto 0;
 `;
 
-const Title = styled.h2`
+const Title = styled.h1`
   margin: 5px 0;
   font-size: 22px;
-  font-family: "Playfair Display", serif;
 `;
 
 const Desc = styled.p`
@@ -200,11 +207,14 @@ const ShowMoreButton = styled.button`
   font-size: 14px;
   font-weight: 900;
 
+  display: ${(props) => props.display};
+
   border: none;
   color: #fff;
   background: #d43076;
   border-radius: 60px;
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  border: 0.8px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12);
 
   transition: all 0.4s;
 
@@ -221,8 +231,19 @@ const LineBreak = styled.hr`
   border-top: 0.8px solid rgba(0, 0, 0, 0.1);
 `;
 
-const blog = ({articles}) => {
+const blog = ({ articles }) => {
+  const [visible, setVisible] = useState(null);
 
+  useEffect(() => {
+    const blogCount = window.sessionStorage.getItem("blog");
+    blogCount ? setVisible(parseInt(blogCount)) : setVisible(5);
+  }, []);
+
+  const showMoreItems = () => {
+    setVisible((prevValue) => prevValue + 3);
+    const count = visible + 3;
+    window.sessionStorage.setItem("blog", count);
+  };
   return (
     <>
       <Container>
@@ -239,27 +260,40 @@ const blog = ({articles}) => {
             <SectionTitle>Artikel</SectionTitle>
           </TitleWrapper>
           <Posts>
-            {articles.map((p) => {
+            {articles.slice(0, visible).map((article) => {
               return (
-                <Link key={p.id} href={`/blog/${p.slug}`} passHref>
+                <Link key={article.id} href={`/blog/${article.slug}`} passHref>
                   <Post>
                     <ImgWrapper>
-                      <Image src={p.coverImage.url} layout="fill" objectFit="cover" />
+                      <Image
+                        src={article.coverImage.url}
+                        layout="fill"
+                        objectFit="cover"
+                      />
                     </ImgWrapper>
                     <TextWrapper>
                       <Detail>
-                        <Date>{p.date}</Date>
+                        <Date>
+                          <Moment format="dddd, DD MMM YYYY">
+                            {article.date}
+                          </Moment>
+                        </Date>
                       </Detail>
                       <LineBreak />
-                      <Title>{p.title}</Title>
-                      <Desc>{p.lead}</Desc> 
+                      <Title>{article.title}</Title>
+                      <Desc>{article.lead}</Desc>
                     </TextWrapper>
                   </Post>
                 </Link>
               );
             })}
             <ShowMore>
-              <ShowMoreButton>Show More</ShowMoreButton>
+              <ShowMoreButton
+                onClick={showMoreItems}
+                display={visible >= articles.length ? "none" : ""}
+              >
+                Show More
+              </ShowMoreButton>
             </ShowMore>
           </Posts>
         </Wrapper>
@@ -271,21 +305,21 @@ const blog = ({articles}) => {
 export const getStaticProps = async () => {
   const { data } = await client.query({
     query: gql`
-    query {
-      articles(orderBy: date_DESC) {
-        id
-        slug
-        title
-        date
-        coverImage {
-          url
-        }
-        lead
-        content {
-          html
+      query {
+        articles(orderBy: date_DESC) {
+          id
+          slug
+          title
+          date
+          coverImage {
+            url
+          }
+          lead
+          content {
+            html
+          }
         }
       }
-    }
     `,
   });
   const { articles } = data;
@@ -293,7 +327,7 @@ export const getStaticProps = async () => {
     props: {
       articles,
     },
-  }; 
+  };
 };
 
 export default blog;

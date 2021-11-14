@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import jata from "../src/img/logo.png";
+import { FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa";
+import { AiFillInstagram } from "react-icons/ai";
 
 const Nav = styled.div`
   z-index: 999;
@@ -15,20 +17,28 @@ const Nav = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  background: #fff;
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
+  background: whitesmoke;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12);
 
   @media (max-width: 992px) {
     padding: 0 20px;
+    justify-content: center;
   }
 `;
 
 const Logo = styled.div`
   display: flex;
-  padding: 0.5rem 0;
   align-items: center;
   width: 300px;
   cursor: pointer;
+
+  @media (max-width: 992px) {
+    padding: 5px 0;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const LogoImg = styled.div`
@@ -42,21 +52,17 @@ const LogoNameWrapper = styled.div`
   margin-left: 10px;
   display: flex;
   flex-direction: column;
-  &:hover {
-    color: #d43076;
-  }
 `;
 
 const LogoName = styled.h1`
-  font-family: "Playfair Display", serif;
   font-size: 21px;
   line-height: 1;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
 `;
 
-const LogoTitle = styled.span`
+const LogoTitle = styled.a`
   font-size: 11px;
   letter-spacing: 0.1px;
 `;
@@ -87,37 +93,80 @@ const Hamburger = styled.div`
     border-radius: 5px;
   }
   @media (max-width: 992px) {
-    display: flex;
+    display: none;
   }
 `;
 
 const MenuLink = styled.a`
-  padding: 15px 15px;
   cursor: pointer;
   text-align: center;
-  transition: all 0.3s ease-in;
+
+  padding: 10px 20px;
+
+  border-top: 5px solid whitesmoke;
+
+  border-bottom: 5px solid
+    ${(props) => (props.active === "active" ? "#d43076" : "whitesmoke")};
+
   font-size: 14px;
-  color: ${(props) => props.active};
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in;
+
+  @media (max-width: 992px) {
+    width: 100%;
+    padding: 20px 20px;
+  }
+
   &:hover {
-    color: #d43076;
+    opacity: 0.8;
+  }
+`;
+
+const SocialMedia = styled.div`
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  margin: 0 10px;
+`;
+
+const SocMedIcon = styled.a`
+  padding: 10px 15px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
   }
 `;
 
 const Contact = styled.a`
-  font-size: 14px;
   cursor: pointer;
+  text-align: center;
+
+  padding: 10px 20px;
+
   color: #fff;
-  background: #d43076;
+  background: #37517e;
+
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
   transition: all 0.3s ease-in;
-  border-radius: 20px;
-  margin-left: 50px;
-  padding: 5px 10px;
-  &:hover {
-    background-color: #ce3276;
-  }
+
+  border-top: 5px solid #37517e;
+  border-bottom: 5px solid #37517e;
 
   @media (max-width: 992px) {
-    margin: 20px 0;
+    width: 100%;
+  }
+
+  &:hover {
+    opacity: 0.8;
   }
 `;
 
@@ -140,14 +189,12 @@ const pages = [
   },
   {
     url: "/about",
-    name: "About",
+    name: "Info",
   },
 ];
 
 const Navbar = () => {
-
-  const route = useRouter()
-  
+  const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Nav>
@@ -171,11 +218,39 @@ const Navbar = () => {
       <Menu isOpen={isOpen}>
         {pages.map((p, i) => (
           <Link href={p.url} key={i}>
-            <MenuLink active={ p.url === route.pathname ? "#d43076" : ""}>{p.name}</MenuLink>
+            <MenuLink
+              active={p.url === route.pathname ? "active" : ""}
+              onClick={() => setIsOpen(false)}
+            >
+              {p.name}
+            </MenuLink>
           </Link>
         ))}
+        <SocialMedia>
+          <SocMedIcon
+            href="https://www.facebook.com/reezal.merican041"
+            target="_blank"
+          >
+            <FaFacebook />
+          </SocMedIcon>
+          <SocMedIcon
+            href="https://www.instagram.com/reezal_merican/"
+            target="_blank"
+          >
+            <AiFillInstagram />
+          </SocMedIcon>
+          <SocMedIcon href="https://twitter.com/reezal_merican" target="_blank">
+            <FaTwitter />
+          </SocMedIcon>
+          <SocMedIcon
+            href="https://www.youtube.com/channel/UCWYfMmgFJiGI3N9HFTsLwKg"
+            target="_blank"
+          >
+            <FaYoutube />
+          </SocMedIcon>
+        </SocialMedia>
         <Link href="/contact">
-          <Contact>Contact</Contact>
+          <Contact>Hubungi</Contact>
         </Link>
       </Menu>
     </Nav>

@@ -1,15 +1,11 @@
 import styled from "styled-components";
 
-import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/router";
-
-import { FaArrowLeft } from "react-icons/fa";
-import { AiOutlineHome } from "react-icons/ai";
-import Articles from "../../src/article/article";
 
 import gql from "graphql-tag";
 import client from "../../apolloClient";
+import Moment from "react-moment";
+import NavButton from "../../components/NavButton";
 
 const Container = styled.div`
   background-color: #fff;
@@ -143,6 +139,8 @@ const Date = styled.span`
 `;
 
 const Desc = styled.div`
+  column-count: 2;
+
   p {
     font-size: 14px;
     line-height: 1.5;
@@ -151,67 +149,10 @@ const Desc = styled.div`
     white-space: pre-line;
     margin-bottom: 15px;
   }
-`;
-
-const BackBtn = styled.div`
-  cursor: pointer;
-  position: fixed;
-
-  top: 10vh;
-  left: 5vh;
-  z-index: 99;
-
-  background: #d43076;
-  width: 40px;
-  height: 40px;
-  border-radius: 50px;
-  transition: all 0.4s;
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   @media (max-width: 768px) {
-    top: 82vh;
-    left: 77vw;
+    column-count: 1;
   }
-`;
-
-const HomeBtn = styled.div`
-  cursor: pointer;
-  position: fixed;
-
-  top: 10vh;
-  left: 11vh;
-  z-index: 99;
-  background: #d43076;
-  width: 40px;
-  height: 40px;
-  border-radius: 50px;
-  transition: all 0.4s;
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 768px) {
-    top: 82vh;
-    left: 88vw;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-
-const ArrowBackIcon = styled(FaArrowLeft)`
-  color: #fff;
-`;
-
-const HomeIcon = styled(AiOutlineHome)`
-  color: #fff;
 `;
 
 const Author = styled.div`
@@ -231,18 +172,18 @@ const AuthorImg = styled.div`
 `;
 
 const AuthorDetail = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-padding: 10px;
+  padding: 10px;
 `;
 
 const AuthorName = styled.h2`
   font-size: 15px;
 `;
 
-const AuthorTitle = styled.span`
+const AuthorTitle = styled.a`
   font-size: 14px;
 `;
 
@@ -256,16 +197,6 @@ const LineBreak = styled.hr`
 const post = ({ article }) => {
   return (
     <Container key={article.id}>
-      <Link href="/blog">
-        <BackBtn>
-          <ArrowBackIcon />
-        </BackBtn>
-      </Link>
-      <Link href="/">
-        <HomeBtn>
-          <HomeIcon />
-        </HomeBtn>
-      </Link>
       <Hero>
         <Image src={article.coverImage.url} layout="fill" objectFit="cover" />
         <LinearBg></LinearBg>
@@ -278,7 +209,9 @@ const post = ({ article }) => {
           <Paper>
             <TextWrapper>
               <Detail>
-                <Date>{article.date}</Date>
+                <Date>
+                  <Moment format="dddd, DD MMM YYYY">{article.date}</Moment>
+                </Date>
               </Detail>
               <LineBreak />
               <Desc
@@ -295,8 +228,12 @@ const post = ({ article }) => {
                   />
                 </AuthorImg>
                 <AuthorDetail>
-                  <AuthorName>Dato' Sri Reezal Merican Naina Merican</AuthorName>
-                  <AuthorTitle>Menteri Perumahan dan Kerajaan Tempatan</AuthorTitle>
+                  <AuthorName>
+                    Dato' Sri Reezal Merican Naina Merican
+                  </AuthorName>
+                  <AuthorTitle>
+                    Menteri Perumahan dan Kerajaan Tempatan
+                  </AuthorTitle>
                 </AuthorDetail>
               </Author>
             </TextWrapper>

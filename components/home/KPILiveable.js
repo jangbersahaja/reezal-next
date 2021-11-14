@@ -51,7 +51,6 @@ const ImgWrapper = styled.div`
   width: 32.5%;
   height: 100%;
 
-
   border: 0.8px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12);
 
@@ -77,7 +76,7 @@ const TextWrapper = styled.div`
   }
 `;
 
-const Title = styled.h1`
+const Title = styled.h2`
   font-size: 3em;
   line-height: 1;
 `;
@@ -181,7 +180,7 @@ const KPILiveable = () => {
             <br />
           </PostText>
           <LineBreak />
-          <Link href="">
+          <Link href="/focus/liveablemalaysia" passHref>
             <ReadMore>Click to read</ReadMore>
           </Link>
         </TextWrapper>

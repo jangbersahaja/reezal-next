@@ -69,7 +69,7 @@ const Details = styled.div`
   width: 60%;
 `;
 
-const VideoTitle = styled.h1`
+const VideoTitle = styled.h2`
   font-size: 16px;
 `;
 
@@ -147,16 +147,24 @@ const parliamentVideos = [
     url: "https://youtu.be/IQvoHrDHSaI",
     thumbnail: "https://img.youtube.com/vi/IQvoHrDHSaI/sddefault.jpg",
   },
+  {
+    id: 5,
+    title: "Sesi Pertanyaan Lisan",
+    date: new Date("2021-11-01"),
+    url: "https://youtu.be/3gCZnHNGKk8",
+    thumbnail: "https://img.youtube.com/vi/3gCZnHNGKk8/sddefault.jpg",
+  },
 ];
 
 const MediaStatement = () => {
-  const [play, setPlay] = useState(1);
+  const sortedVideos = parliamentVideos.sort((a, b) => b.date - a.date);
+  const [play, setPlay] = useState(sortedVideos[0].id);
 
   return (
     <Section>
       <Items>
         <Playlist>
-          {parliamentVideos.map((v) => (
+          {sortedVideos.map((v) => (
             <Video
               onClick={() => setPlay(v.id)}
               key={v.id}

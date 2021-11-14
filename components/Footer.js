@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
-import {FaFacebook, FaInstagram, FaTwitter, FaYoutube} from "react-icons/fa"
+import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
 const Wrapper = styled.div`
   padding: 0 5%;
-  background-color: #2c4964;
+  background-color: #37517e;
   display: flex;
+
+  z-index: 9;
 
   @media (max-width: 992px) {
     flex-direction: column;
@@ -52,33 +54,18 @@ const Right = styled.div`
 `;
 
 const CopyrightText = styled.span`
-color: #fff;
-text-align: center;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
 `;
 
 const Footer = () => {
   return (
     <Wrapper>
-      <Left>
-        <SocialMedia>
-          <SocMedIcon  href = "https://www.facebook.com/reezal.merican041" target="_blank">
-            <FaFacebook />
-          </SocMedIcon>
-          <SocMedIcon href = "https://www.instagram.com/reezal_merican/" target="_blank">
-            <FaInstagram />
-          </SocMedIcon>
-          <SocMedIcon href = "https://twitter.com/reezal_merican" target="_blank">
-            <FaTwitter />
-          </SocMedIcon>
-          <SocMedIcon href = "https://www.youtube.com/channel/UCWYfMmgFJiGI3N9HFTsLwKg" target="_blank">
-            <FaYoutube />
-          </SocMedIcon>
-        </SocialMedia>
-      </Left>
       <Right>
-          <CopyrightText>
-          &copy; Copyright <strong >Reezal Merican. </strong> All Rights Reserved
-          </CopyrightText>
+        <CopyrightText>
+          &copy; Copyright <strong>Reezal Merican. </strong> All Rights Reserved
+        </CopyrightText>
       </Right>
     </Wrapper>
   );
